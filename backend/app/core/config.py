@@ -34,7 +34,12 @@ class Settings:
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./fraud_platform.db")
+    if os.getenv("VERCEL"):
+        import tempfile
+        default_db = f"sqlite:///{os.path.join(tempfile.gettempdir(), 'fraud_platform.db')}"
+    else:
+        default_db = "sqlite:///./fraud_platform.db"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", default_db)
 
     # CORS
     CORS_ORIGINS: List[str] = [
