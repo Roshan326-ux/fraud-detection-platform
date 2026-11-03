@@ -3,9 +3,6 @@ Preprocessing Pipeline for Transaction Fraud Detection
 Defines consistent transformations for numerical and categorical features.
 """
 
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-
 NUMERIC_FEATURES = [
     'amount',
     'time_delta_sec',
@@ -23,11 +20,14 @@ CATEGORICAL_FEATURES = [
 ALL_FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES
 TARGET_COLUMN = 'is_fraud'
 
-def create_preprocessor() -> ColumnTransformer:
+def create_preprocessor():
     """
     Creates a scikit-learn ColumnTransformer that standardizes numeric
     inputs and one-hot encodes categorical categories.
     """
+    from sklearn.compose import ColumnTransformer
+    from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
     numeric_transformer = StandardScaler()
     categorical_transformer = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
 

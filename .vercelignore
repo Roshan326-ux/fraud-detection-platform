@@ -1,0 +1,7 @@
+.git
+.pytest_cache
+backend/tests
+ml_pipeline/data/transactions_train.csv
+VIVA_GUIDE.md
+README.md
+Dockerfile
