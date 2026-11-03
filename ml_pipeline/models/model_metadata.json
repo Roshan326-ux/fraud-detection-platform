@@ -1,0 +1,107 @@
+{
+  "production_model": "Random Forest Classifier",
+  "training_dataset_size": 15000,
+  "fraud_ratio": 0.035,
+  "features": [
+    "amount",
+    "time_delta_sec",
+    "failed_logins_24h",
+    "device_trust_score",
+    "location_distance_km",
+    "is_international",
+    "is_vpn_or_proxy",
+    "merchant_category"
+  ],
+  "evaluation": {
+    "baseline_logistic_regression": {
+      "model_name": "Logistic Regression (Baseline)",
+      "accuracy": 0.9287,
+      "precision": 0.3201,
+      "recall": 0.9238,
+      "f1_score": 0.4755,
+      "roc_auc": 0.9834,
+      "confusion_matrix": [
+        [
+          2689,
+          206
+        ],
+        [
+          8,
+          97
+        ]
+      ]
+    },
+    "production_random_forest": {
+      "model_name": "Random Forest Classifier",
+      "accuracy": 0.9873,
+      "precision": 0.7638,
+      "recall": 0.9238,
+      "f1_score": 0.8362,
+      "roc_auc": 0.9971,
+      "confusion_matrix": [
+        [
+          2865,
+          30
+        ],
+        [
+          8,
+          97
+        ]
+      ]
+    }
+  },
+  "top_features": [
+    {
+      "feature": "device_trust_score",
+      "importance": 0.345
+    },
+    {
+      "feature": "location_distance_km",
+      "importance": 0.1921
+    },
+    {
+      "feature": "time_delta_sec",
+      "importance": 0.178
+    },
+    {
+      "feature": "amount",
+      "importance": 0.1117
+    },
+    {
+      "feature": "failed_logins_24h",
+      "importance": 0.0563
+    },
+    {
+      "feature": "is_vpn_or_proxy",
+      "importance": 0.053
+    },
+    {
+      "feature": "is_international",
+      "importance": 0.0211
+    },
+    {
+      "feature": "merchant_category_grocery",
+      "importance": 0.0133
+    }
+  ],
+  "risk_score_calibration": {
+    "description": "Model probability is scaled to a 0-100 score and partitioned into operational risk bands.",
+    "bands": {
+      "low": {
+        "min": 0,
+        "max": 39,
+        "action": "Approve"
+      },
+      "medium": {
+        "min": 40,
+        "max": 69,
+        "action": "Flag for Manual Verification"
+      },
+      "high": {
+        "min": 70,
+        "max": 100,
+        "action": "Immediate Freeze & Alert Notification"
+      }
+    }
+  }
+}
